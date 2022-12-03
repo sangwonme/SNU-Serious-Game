@@ -5,18 +5,21 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
 
+    // public params
+    public float xSpeed;
+    public string state;
+    // get other components
     private Timer timer;
     private Rigidbody theRB;
     private BoxCollider boxCollider;
     private SpriteRenderer sprite;
-    private float dayY;
-    private float nightY;
-    private float ySpeed;
-    public float xSpeed;
-    private string state;
-    private float prevY;
-    private float stateChangeTimeLeft;
-    bool isDead = false;
+    // going up & down
+    float dayY = -2.06f;
+    float nightY = 0.0f;
+    float ySpeed = 0.0f;
+    float prevY = 0.0f;
+    // state change
+    float stateChangeTimeLeft = 0.0f;
     float timeCount = 0.0f;
 
     void setRandomTimeLeft(){
@@ -43,22 +46,19 @@ public class Monster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        state = "idle";
         timer = GameObject.Find("GameController").GetComponent<Timer>();
         theRB = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-        dayY = -2.06f;
-        nightY = 0.0f;
-        ySpeed = 0.0f;
-        setRandomState();
+        sprite = GetComponent<SpriteRenderer>();
         setRandomTimeLeft();
         prevY = transform.position.y;
-        sprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // day
+        // going up down
         if(timer.isDay){
             theRB.useGravity = false;
             // go down
@@ -71,7 +71,6 @@ public class Monster : MonoBehaviour
                 ySpeed = 0.0f;
             }
         }
-        // night
         else{
             theRB.useGravity = true;
             // go up
@@ -82,37 +81,48 @@ public class Monster : MonoBehaviour
                 boxCollider.enabled = true;
                 ySpeed = 0.0f;
             }
-            // move
-            if(!isDead && prevY == transform.position.y && transform.position.y > 0.2f){
-                theRB.velocity = new Vector3(
-                    state=="right" ? xSpeed : 
-                    state=="left" ? -xSpeed : 0
-                , 0, 0);
-            }
         }
-
         // update prevY
         prevY = transform.position.y;
 
+
+        switch(state){
+            case "idle":
+                break;
+            case "right":
+                if(!timer.isDay){
+                    theRB.velocity = new Vector3(xSpeed, 0, 0);
+                    sprite.flipX = true;
+                }
+                break;
+            case "left":
+                if(!timer.isDay){
+                    theRB.velocity = new Vector3(-xSpeed, 0, 0);
+                    sprite.flipX = false;
+                }
+                break;
+            case "dead":
+                boxCollider.enabled = false;
+                sprite.enabled = false;
+                break;
+            default:
+                break;
+        }
+        
         // direction set
-        if(!isDead && prevY == transform.position.y && transform.position.y > 0.2f && !timer.isDay){
+        if(
+            (state == "left" || state == "right" || state == "idle") &&
+            prevY == transform.position.y && 
+            transform.position.y > 0.2f && 
+            !timer.isDay
+        ){
             stateChangeTimeLeft -= Time.deltaTime;
-            Debug.Log(stateChangeTimeLeft);
             if(stateChangeTimeLeft < 0){
                 setRandomTimeLeft();
                 setRandomState();
-                if(state == "left" || state == "right"){
-                    sprite.flipX = (state == "right");
-                }
             }
         }
 
-        // is dead
-        if(isDead){
-            Quaternion targetRot = Quaternion.Euler(new Vector3(90.0f, 0.0f, 0.0f));
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, timeCount * 3);
-            timeCount += Time.deltaTime;
-        }
     }
 
 }

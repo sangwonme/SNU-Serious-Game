@@ -32,12 +32,12 @@ public class Timer : MonoBehaviour
 
         // sun light set
         if(isDay){
-            if(sunlight.intensity < 1.0f){
-                sunlight.intensity += 0.01f;
+            if(sunlight.intensity < 0.8f){
+                sunlight.intensity += 0.008f;
             }
         }else{
             if(sunlight.intensity > 0.0f){
-                sunlight.intensity -= 0.01f;
+                sunlight.intensity -= 0.008f;
             }
         }
         
