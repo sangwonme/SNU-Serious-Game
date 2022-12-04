@@ -49,6 +49,7 @@
      <Compile Include="Assets/Scripts/Monster.cs" />
      <Compile Include="Assets/PreAssets/Cardboard realistic boxes [HQ,Free]/SCG_Showcase_Modules/Standard Assets/Effects/CinematicEffects(BETA)/Common/ImageEffectHelper.cs" />
      <Compile Include="Assets/Scripts/MonsterSoul.cs" />
+     <Compile Include="Assets/Scripts/MonsterGeneration.cs" />
      <None Include="Assets/PreAssets/Cardboard realistic boxes [HQ,Free]/SCG_Showcase_Modules/Standard Assets/Effects/CinematicEffects(BETA)/DepthOfField/Shaders/MedianFilter.shader" />
      <None Include="Assets/PreAssets/Interior/README.txt" />
      <None Include="Assets/PreAssets/Cardboard realistic boxes [HQ,Free]/SCG_Showcase_Modules/Standard Assets/Effects/CinematicEffects(ALPHA)/AntiAliasing/Shaders/SMAA.cginc" />
