@@ -17,6 +17,8 @@ public class MonsterBody : MonoBehaviour
     // collider
     private BoxCollider boxCollider;
     private SphereCollider sphereCollider;
+    // monster Light
+    public GameObject monsterLight;
 
     // set random time left to state change
     void setRandomTimeLeft(){
@@ -73,6 +75,9 @@ public class MonsterBody : MonoBehaviour
         // sleep or spawn check
         animator.SetBool("isSpawn", !timer.isDay);
         animator.SetBool("isSleep", timer.isDay);
+
+        // set idle when day
+        if(timer.isDay) state = "idle";
         
         // walk
         animator.SetBool("isWalk", (state == "left" || state == "right"));
@@ -99,6 +104,15 @@ public class MonsterBody : MonoBehaviour
                 setRandomTimeLeft();
                 setRandomState();
             }
+        }
+
+        // light
+        monsterLight.transform.position = new Vector3(transform.position.x, transform.position.y-1.02f, transform.position.z-1.23f);
+        if(!timer.isDay && monsterLight.GetComponent<Light>().intensity < 2.0f){
+            monsterLight.GetComponent<Light>().intensity += 0.05f;
+        }
+        else if(timer.isDay && monsterLight.GetComponent<Light>().intensity > 0.0f){
+            monsterLight.GetComponent<Light>().intensity -= 0.05f;
         }
     }
 
