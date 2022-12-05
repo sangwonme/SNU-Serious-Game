@@ -41,7 +41,6 @@ public class MonsterSoul : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(monsterBody.transform.position);
         // follow monsterbody
         transform.position = new Vector3(monsterBody.transform.position.x, monsterBody.transform.position.y-2.9f, monsterBody.transform.position.z-0.9f);
     
