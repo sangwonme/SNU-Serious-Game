@@ -36,6 +36,7 @@ public class MonsterSoul : MonoBehaviour
         monster = transform.parent.gameObject;
         monsterBody = transform.parent.transform.GetChild(0).gameObject;
         updateMonsterState();
+        setLight(0.0f);
     }
 
     // Update is called once per frame
