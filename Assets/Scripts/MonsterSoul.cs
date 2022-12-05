@@ -4,23 +4,18 @@ using UnityEngine;
 
 public class MonsterSoul : MonoBehaviour
 {
+    // light
     public Light surroundLight;
     public Light nuclearLight;
+    bool goBright = true;
+    // eat
     public SphereCollider eatCollider;
+    // monster
     private GameObject monster;
     private GameObject monsterBody;
     private string state;
-    private Rigidbody theRB;
-    bool goBright = true;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        monster = transform.parent.gameObject;
-        monsterBody = transform.parent.transform.GetChild(0).gameObject;
-        updateMonsterState();
-        theRB = GetComponent<Rigidbody>();
-    }
+
 
     void setLight(float intensity){
         surroundLight.intensity = intensity;
@@ -28,32 +23,40 @@ public class MonsterSoul : MonoBehaviour
     }
 
     void updateMonsterState(){
-        state = monsterBody.GetComponent<Monster>().state;
+        state = monsterBody.GetComponent<MonsterBody>().state;
     }
 
     float getLight(){
         return surroundLight.intensity;
     }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        monster = transform.parent.gameObject;
+        monsterBody = transform.parent.transform.GetChild(0).gameObject;
+        updateMonsterState();
+    }
+
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(monsterBody.transform.position);
+        // follow monsterbody
+        transform.position = new Vector3(monsterBody.transform.position.x, monsterBody.transform.position.y-2.9f, monsterBody.transform.position.z-0.9f);
+    
+        // check if dead
         updateMonsterState();
         if(state == "dead"){
             // blinking
             if(getLight() > 2.0f) goBright = false;
             else if(getLight() < 1.0f) goBright = true;
-            Debug.Log(goBright);
             // set intensity
             if(goBright) setLight(getLight()+0.01f);
             else setLight(getLight()-0.01f);
-            // light pos
-            transform.position = new Vector3(transform.position.x, 0.06f, transform.position.z);
         }else{
             // turn off
             setLight(0.0f);
-            // light pos
-            transform.position = monsterBody.transform.position;
         }
     }
 

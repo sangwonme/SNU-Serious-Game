@@ -60,6 +60,13 @@ public class MonsterBody : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // dead
+        if(state == "dead"){
+            boxCollider.enabled = false;
+            sphereCollider.enabled = false;
+            sprite.enabled = false;
+        }
+
         // box collider
         boxCollider.enabled = !(timer.isDay);
 
@@ -97,6 +104,7 @@ public class MonsterBody : MonoBehaviour
 
     // scream
     private void OnTriggerEnter(Collider other) {
+        // scream
         if(other.tag == "Player" && !timer.isDay){
             state = "scream";
             animator.SetBool("isScream", true);
