@@ -354,6 +354,7 @@
 "Assets/Scripts/CamerController.cs"
 "Assets/Scripts/GameController.cs"
 "Assets/Scripts/Monster.cs"
+"Assets/Scripts/MonsterBody.cs"
 "Assets/Scripts/MonsterGeneration.cs"
 "Assets/Scripts/MonsterSoul.cs"
 "Assets/Scripts/PlayerController.cs"
