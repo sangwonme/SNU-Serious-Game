@@ -7,14 +7,29 @@ public class PlayerController : MonoBehaviour
     public Rigidbody theRB;
     public SpriteRenderer spriteRenderer;
     public Animator animator;
+    public int jumpPower;
     public float moveSpeed;
     private Vector2 moveInput;
+    private BoxCollider col;
+    private bool IsJumping;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        IsJumping = false;
+    }
+
+    void Jump ()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (!IsJumping)
+            {
+                IsJumping = true;
+                theRB.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -26,6 +41,9 @@ public class PlayerController : MonoBehaviour
 
         // move
         theRB.velocity = new Vector3(moveInput.x * moveSpeed, theRB.velocity.y, moveInput.y * moveSpeed);
+
+        // jump
+        Jump();
 
         // sprite direction
         if(moveInput.x > 0){
@@ -40,6 +58,14 @@ public class PlayerController : MonoBehaviour
         }
         else{
             animator.SetBool("isWalking", false);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Box"))
+        {
+            IsJumping = false;
         }
     }
 }

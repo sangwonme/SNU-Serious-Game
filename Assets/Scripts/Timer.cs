@@ -10,11 +10,13 @@ public class Timer : MonoBehaviour
     public float totalTime;
     public bool isDay = true;
     public float timeLeft;
+    public int dayCount;
 
     // Start is called before the first frame update
     void Start()
     {
         timeLeft = totalTime;
+        dayCount = 1;
     }
 
     // Update is called once per frame
@@ -28,6 +30,7 @@ public class Timer : MonoBehaviour
         if(timeLeft <= 0){
             isDay = true;
             timeLeft = totalTime;
+            dayCount += 1;
         }
 
         // sun light set
