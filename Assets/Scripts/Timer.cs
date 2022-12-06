@@ -9,7 +9,7 @@ public class Timer : MonoBehaviour
     public float nightTime;
     public float totalTime;
     public bool isDay = true;
-    private float timeLeft;
+    public float timeLeft;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,7 @@ public class Timer : MonoBehaviour
         if(timeLeft <= nightTime){
             isDay = false;
         }
-        if(timeLeft <= 1){
+        if(timeLeft <= 0){
             isDay = true;
             timeLeft = totalTime;
         }

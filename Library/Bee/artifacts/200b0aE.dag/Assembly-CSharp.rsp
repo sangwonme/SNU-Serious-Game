@@ -359,6 +359,7 @@
 "Assets/Scripts/MonsterSoul.cs"
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/Timer.cs"
+"Assets/Scripts/UIClock.cs"
 -langversion:9.0
 
 /deterministic
